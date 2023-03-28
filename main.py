@@ -15,7 +15,7 @@ print(openai_api_key)
 if openai_api_key is not None:
     os.environ["OPENAI_API_KEY"] = openai_api_key
 
-with open('./test-data/news-denison-edu.json', 'r', encoding="utf8") as f:
+with open('./test-data/admission.json', 'r', encoding="utf8") as f:
     data = json.load(f)
 
 text_splitter = RecursiveCharacterTextSplitter(
@@ -31,5 +31,7 @@ vectorstore = FAISS.from_texts(texts, embeddings)
 qa = VectorDBQA.from_chain_type(llm=ChatOpenAI(max_retries=2, temperature=0.1,
                                                model_name="gpt-3.5-turbo"), chain_type="stuff", vectorstore=vectorstore)
 
-query = input("What would you like to know? ")
-print(qa.run(query))
+while (True):
+    query = input("What would you like to know? Question:")
+    print("--------------------------------------------------")
+    print("Answer: " + qa.run(query))
