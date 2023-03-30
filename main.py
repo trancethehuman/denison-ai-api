@@ -1,37 +1,14 @@
-import os
-import json
-from dotenv import load_dotenv
-from langchain.embeddings.openai import OpenAIEmbeddings
-from langchain.vectorstores.faiss import FAISS
-from langchain.text_splitter import RecursiveCharacterTextSplitter
-from langchain.chains import RetrievalQA
-from langchain.chat_models import ChatOpenAI
-from langchain import OpenAI, VectorDBQA
+import streamlit as st
 
-load_dotenv()  # Required to load .env
+from admission_chatbot import get_admission_chatbot_response
 
-openai_api_key = os.getenv("OPENAI_API_KEY")
-print(openai_api_key)
-if openai_api_key is not None:
-    os.environ["OPENAI_API_KEY"] = openai_api_key
+st.title("Denison University AI Tools Demo")
 
-with open('./test-data/admission.json', 'r', encoding="utf8") as f:
-    data = json.load(f)
+st.subheader("1. Admission AI Assistant")
 
-text_splitter = RecursiveCharacterTextSplitter(
-    chunk_size=800, chunk_overlap=300)
-texts = text_splitter.split_text(json.dumps(data))
+user_response = st.text_input(
+    "Type your question and hit Enter!", max_chars=80)
 
-embeddings = OpenAIEmbeddings(max_retries=2)
-vectorstore = FAISS.from_texts(texts, embeddings)
-
-# qa = RetrievalQA.from_llm(llm=ChatOpenAI(
-#     model_name="gpt-3.5-turbo"))
-
-qa = VectorDBQA.from_chain_type(llm=ChatOpenAI(max_retries=2, temperature=0.1,
-                                               model_name="gpt-3.5-turbo"), chain_type="stuff", vectorstore=vectorstore)
-
-while (True):
-    query = input("What would you like to know? Question:")
-    print("--------------------------------------------------")
-    print("Answer: " + qa.run(query))
+if (user_response):
+    with st.spinner('Wait for it...'):
+        st.write(get_admission_chatbot_response(user_response))
