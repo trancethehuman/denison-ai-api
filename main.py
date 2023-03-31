@@ -5,12 +5,18 @@ from newsletter import get_news_recommendation
 
 st.title("Denison University AI Tools Demo")
 
+st.write(f"""This interactive demo's purpose is to demonstrate AI's capabilities to optimize a few of Denison University's departments work""")
+
+st.text("")
+st.text("")
+st.text("")
+
 st.subheader("1. Admission AI Assistant")
 
 user_response = st.text_input(
-    "Type your question and hit Enter!", max_chars=80)
+    "Ask anything about Denison's admission process and hit Send!", max_chars=80)
 
-if (user_response):
+if (st.button("Send")):
     with st.spinner('Give me some time to think on this...'):
         st.write(get_admission_chatbot_response(user_response))
 
@@ -36,8 +42,8 @@ with col3:
         'Major',
         majors_options, index=0)
 
-interest_options = ['Fraternities & Sororities', 'Varsity Sport',
-                    'Finance', 'Business', 'Arts', 'Community Service', 'Volunteering', 'Travel', 'Music', 'Science']
+interest_options = ['Varsity Sport', 'Science',
+                    'Finance', 'Business', 'Arts', 'Community Service', 'Volunteering', 'Fraternities & Sororities', 'Travel', 'Music']
 interests = st.multiselect(
     "Interests, Activities, or Career", interest_options, default=interest_options[:len(interest_options)//3])
 
