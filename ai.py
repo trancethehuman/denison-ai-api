@@ -31,7 +31,7 @@ vectorstore_retrievers: Dict[str, Any] = {
 }
 
 
-def get_vectorstore_retriever(input: str, vectorstore_name: str):
+def initialize_vectorstore(input: str, vectorstore_name: str):
     if (vectorstore_retrievers[vectorstore_name] is None):
         text_splitter = RecursiveCharacterTextSplitter(
             chunk_size=3000, chunk_overlap=200)
@@ -46,7 +46,7 @@ def get_vectorstore_retriever(input: str, vectorstore_name: str):
 
 
 def get_openai_chat_response(text_context: str, user_reply: str, set_the_tone: str, vectorstore_category):
-    get_vectorstore_retriever(text_context, vectorstore_category)
+    initialize_vectorstore(text_context, vectorstore_category)
 
     qa = RetrievalQA.from_llm(
         llm=llm, retriever=vectorstore_retrievers[vectorstore_category])
@@ -55,7 +55,7 @@ def get_openai_chat_response(text_context: str, user_reply: str, set_the_tone: s
 
 
 def get_openai_article_recommendation(text_context, user_profile: str, set_the_tone: str, vectorstore_category):
-    get_vectorstore_retriever(text_context, vectorstore_category)
+    initialize_vectorstore(text_context, vectorstore_category)
 
     qa = RetrievalQA.from_llm(
         llm=llm, retriever=vectorstore_retrievers[vectorstore_category])
