@@ -10,4 +10,4 @@ set_the_tone = "You are Denison University's admission assistant. Only answer qu
 
 
 def get_admission_chatbot_response(user_reply):
-    return get_openai_chat_response(data, user_reply, set_the_tone)
+    return get_openai_chat_response(data, user_reply, set_the_tone, "admission")

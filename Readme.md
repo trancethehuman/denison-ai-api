@@ -1,4 +1,4 @@
 # Denison AI Services
 
 - Run Streamlit
-  - `streamlit run main.py`
+  - `streamlit run streamlit_demo.py`

@@ -51,7 +51,7 @@ interests = st.multiselect(
 article_source_column, number_of_articles_column = st.columns(2)
 with article_source_column:
     articles_source = st.selectbox(
-        label="Articles Source", options=('denison.edu', 'The Denisonian'), index=0)
+        label="Articles Source", options=('denison_edu', 'denisonian'), index=0)
 
 with number_of_articles_column:
     number_of_articles = st.number_input(
